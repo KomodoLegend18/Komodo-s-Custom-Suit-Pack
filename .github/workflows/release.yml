@@ -13,11 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Read JSON file
+      - name: Reading manifest.JSON file
         id: read_json
         run: |
           if [ -f manifest.json ]; then
-            echo "::set-output name=version::$(jq -r .version_number manifest.json)"
+            echo "version=${jq -r .version_number manifest.json}" >> $GITHUB_OUTPUT
           else
             echo "manifest.json not found. Exiting..."
             exit 1
