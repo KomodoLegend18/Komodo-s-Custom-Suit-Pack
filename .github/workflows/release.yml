@@ -1,4 +1,4 @@
-name: Release Package
+name: Build and Release
 
 on:
   push:
@@ -23,15 +23,6 @@ jobs:
             exit 1
           fi
 
-      - name: Check Previous Release
-        id: check_previous_release
-        run: |
-          previous_release=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
-          if [ "${previous_release}" = "${{ steps.read_json.outputs.version }}" ]; then
-            echo "Version has not changed. Skipping release creation."
-            exit 78  # Exit with a neutral exit code to indicate skipping
-          fi
-
       - name: Create Zip
         run: |
           zip -r "Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip" .
@@ -47,6 +38,9 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Debug
+        run: echo "Create Release Output: ${{ toJson(steps.create_release.outputs) }}"
+  
   upload:
     runs-on: ubuntu-latest
 
@@ -58,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.build.outputs.upload_url }}
+          upload_url: ${{ needs.build.outputs.create_release.outputs.upload_url }}
           asset_path: "./Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip"
           asset_name: "Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip"
           asset_content_type: application/zip
