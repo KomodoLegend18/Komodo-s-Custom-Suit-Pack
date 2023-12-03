@@ -39,11 +39,9 @@ jobs:
           draft: false
           prerelease: false
           body: |
-            KCSP v${{ steps.read_json.outputs.version }}
+            KCSP v${{ steps.read_json.outputs.version }} has been released! 🎉
           files: "Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip"
 
       - name: Released
         run: |
-            echo |
-            Package released:
-            ${{ fromJSON(steps.create_release.outputs.assets)[0].browser_download_url }}
+          echo "Package released: \n${{ fromJSON(steps.create_release.outputs.assets)[0].browser_download_url }}"
