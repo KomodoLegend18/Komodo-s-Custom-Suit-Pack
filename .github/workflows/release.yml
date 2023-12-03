@@ -17,7 +17,7 @@ jobs:
         id: read_json
         run: |
           if [ -f manifest.json ]; then
-            echo "version=${jq -r .version_number manifest.json}" >> $GITHUB_OUTPUT
+            echo "version=$(jq -r .version_number manifest.json)" >> $GITHUB_OUTPUT
           else
             echo "manifest.json not found. Exiting..."
             exit 1
