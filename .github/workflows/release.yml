@@ -1,0 +1,64 @@
+name: Release Package
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch as needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Read JSON file
+        id: read_json
+        run: |
+          if [ -f manifest.json ]; then
+            echo "::set-output name=version::$(jq -r .version_number manifest.json)"
+          else
+            echo "manifest.json not found. Exiting..."
+            exit 1
+          fi
+
+      - name: Check Previous Release
+        id: check_previous_release
+        run: |
+          previous_release=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          if [ "${previous_release}" = "${{ steps.read_json.outputs.version }}" ]; then
+            echo "Version has not changed. Skipping release creation."
+            exit 78  # Exit with a neutral exit code to indicate skipping
+          fi
+
+      - name: Create Zip
+        run: |
+          zip -r "Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip" .
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.read_json.outputs.version }}
+          release_name: Release ${{ steps.read_json.outputs.version }}
+          draft: false
+          prerelease: false
+
+  upload:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.build.outputs.upload_url }}
+          asset_path: "./Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip"
+          asset_name: "Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip"
+          asset_content_type: application/zip
