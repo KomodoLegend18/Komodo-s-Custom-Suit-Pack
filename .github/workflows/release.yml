@@ -25,7 +25,8 @@ jobs:
 
       - name: Create Zip
         run: |
-          zip -r "Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip" .
+          zip -r "Komodo_Custom_Suit_Pack_${{ steps.read_json.outputs.version }}.zip" . -x "*.git*" -x "*.github*"
+
 
       - name: Create Release
         id: create_release
