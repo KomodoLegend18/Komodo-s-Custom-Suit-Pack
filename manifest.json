@@ -1,7 +1,7 @@
 {
     "name": "Komodo_Custom_Suit_Pack",
-    "version_number": "1.0.2",
-    "description": "Adds more custom suits to choose from!",
+    "version_number": "1.0.3",
+    "description": "Adds 10 custom made suits || v1.0.3, a few adjustments to existing suits and 1 new suit",
     "website_url": "https://komodolegend18.github.io/",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2100",

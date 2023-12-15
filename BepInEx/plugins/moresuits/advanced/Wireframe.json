@@ -1,10 +1,5 @@
 {
-    "_NormalScale": "0.0",
-
-    "_EmissiveColorMap": "G_Wireframe.png",
-    "_UseEmissiveIntensity": 1.0,
-    "_EmissiveIntensity": 10.0,
-    "_EmissiveColor": "1.0, 1.0, 1.0, 1.0",
-    "_EMISSIVE_COLOR_MAP": "KEYWORD",
+    "SHADER": "Custom/Additive (Soft, Tintable)",
+    "_MainTex": "G_Wireframe.png",
     "PRICE": "30"
 }

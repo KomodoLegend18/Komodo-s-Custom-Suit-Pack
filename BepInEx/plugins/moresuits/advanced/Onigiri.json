@@ -1,6 +1,6 @@
 {
-    "_NormalScale": "0.0",
-
+    "_NormalMap": "CustomNormalMap.png",
+    "_NormalScale": "1.0",
     "_EmissiveColorMap": "G_Onigiri.png",
     "_UseEmissiveIntensity": 1.0,
     "_EmissiveIntensity": 10.0,

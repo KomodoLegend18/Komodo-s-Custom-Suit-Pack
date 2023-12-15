@@ -1,4 +1,8 @@
 {
-    "_NormalScale": "0.0",
+    "_NormalMap": "CustomNormalMap.png",
+    "_NormalScale": "1.0",
+    "_AlphaCutoffEnable": 1,
+    "_ZTestGBuffer": 3,
+    "_ALPHATEST_ON": "KEYWORD",
     "PRICE": "10"
 }

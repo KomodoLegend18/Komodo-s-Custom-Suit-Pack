@@ -1,5 +1,5 @@
 name: Build and Release
-
+run-name: "Building Package #${{ github.run_number }} by ${{ github.actor }}"
 on:
   push:
     branches:
@@ -35,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.read_json.outputs.version }}
-          name: Release ${{ steps.read_json.outputs.version }}
+          name: KCSP ${{ steps.read_json.outputs.version }}
           draft: false
           prerelease: false
           body: |
@@ -44,4 +44,4 @@ jobs:
 
       - name: Released
         run: |
-          echo "Package released: \n${{ fromJSON(steps.create_release.outputs.assets)[0].browser_download_url }}"
+          echo ${{ fromJSON(steps.create_release.outputs.assets)[0].browser_download_url }}
